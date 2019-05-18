@@ -185,6 +185,9 @@ their own yaml files and then apply them with `kubectl apply -f <filename>`.
     ```shell
     kubectl get deployments -n default
     ```
+
+    In particular, we want the number in the DESIRED column to match the number in the AVAILABLE column. This may take 
+    few minutes.    
     
 1. Verify the service was created:
 
@@ -218,9 +221,6 @@ their own yaml files and then apply them with `kubectl apply -f <filename>`.
     ```shell
     kubectl get triggers -n default
     ```
-    
-    In particular, we want the number in the DESIRED column to match the number in the AVAILABLE column. This may take 
-    few minutes.
     
 1. Publish a message to your Google Cloud Pub/Sub Topic:
 
