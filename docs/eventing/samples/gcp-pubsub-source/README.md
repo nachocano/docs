@@ -1,29 +1,27 @@
-This sample shows how to configure the GCP PubSub event source. This event
-source is most useful as a bridge from other GCP services, such as
-[Cloud Storage](https://cloud.google.com/storage/docs/pubsub-notifications),
-[IoT Core](https://cloud.google.com/iot/docs/how-tos/devices) and
-[Cloud Scheduler](https://cloud.google.com/scheduler/docs/creating#).
+# Google Cloud Pub/Sub Importer
 
-## Prerequisites
+This importer brings Google Cloud Pub/Sub events into Knative. 
+As many Google Cloud Services use Pub/Sub as a transport, 
+this importer can be used to bring events from services such as [Cloud Storage](https://cloud.google.com/storage/docs/pubsub-notifications), 
+[IoT Core](https://cloud.google.com/iot/docs/how-tos/devices), [Cloud Scheduler](https://cloud.google.com/scheduler/docs/creating#), etc.
+
+## Before you begin
 
 1. Create a
    [Google Cloud project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
-   and install the `gcloud` CLI and run `gcloud auth login`. This sample will
-   use a mix of `gcloud` and `kubectl` commands. The rest of the sample assumes
+   and install the `gcloud` CLI and run `gcloud auth login`. This example will
+   use a mix of `gcloud` and `kubectl` commands. The rest of the example assumes
    that you've set the `$PROJECT_ID` environment variable to your Google Cloud
-   project id, and also set your project ID as default using
+   project ID, and also set your project ID as default using
    `gcloud config set project $PROJECT_ID`.
-
-1. Setup [Knative Serving](../../../install)
-
-1. Setup [Knative Eventing](../../../eventing). In addition, install the GCP
-   PubSub event source from `release-gcppubsub.yaml`:
+1. [Install Knative Eventing](#) and verify the health of the Knative Eventing control plane.
+1. Install the Google Cloud Pub/Sub importer. Note that we are using `v.0.6.0` in the following command. 
 
    ```shell
    kubectl apply --filename https://github.com/knative/eventing-contrib/releases/download/v0.7.0/gcppubsub.yaml
    ```
 
-1. Enable the `Cloud Pub/Sub API` on your project:
+1. Enable the Google Cloud Pub/Sub API on your project:
 
    ```shell
    gcloud services enable pubsub.googleapis.com
@@ -46,8 +44,7 @@ source is most useful as a bridge from other GCP services, such as
         --member=serviceAccount:knative-source@$PROJECT_ID.iam.gserviceaccount.com \
         --role roles/pubsub.editor
       ```
-   1. Download a new JSON private key for that Service Account. **Be sure not to
-      check this key into source control!**
+   1. Download a new JSON private key for that Service Account.
       ```shell
       gcloud iam service-accounts keys create knative-source.json \
         --iam-account=knative-source@$PROJECT_ID.iam.gserviceaccount.com
@@ -65,110 +62,211 @@ source is most useful as a bridge from other GCP services, such as
       ```
 
       `gcppubsub-source-key` and `key.json` are pre-configured values in the
-      `controller-manager` StatefulSet which manages your Eventing sources.
+      `gcppubsub-controller-manager` StatefulSet that manages your Google Cloud Pub/Sub importers.
 
-      `google-cloud-key` and `key.json` are pre-configured values in
-      [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml).
+      `google-cloud-key` and `key.json` are pre-configured values in the examples 
+      we will use throughout this tutorial.
 
-## Deployment
+## Description
 
-1. Create the `default` Broker in your namespace. These instructions assume the
+This sample will create the following topology: 
+
+TODO Image.
+
+ * A Google Cloud Pub/Sub Importer called `pubsub-test` that subscribes to the `testing` topic in your 
+ Google Cloud project.
+ * A Broker named default, where the `pubsub-test` Importer sends the events to.
+ * A Trigger that listens to Google Cloud Pub/Sub events from the `default` Broker.
+ * A Kubernetes Service pointing to a Deployment that acts as the event consumer. 
+
+## Step-by-step
+
+1. Label the `default` namespace so that the `default` Broker is created. These instructions assume the
    namespace `default`, feel free to change to any other namespace you would
    like to use instead:
 
    ```shell
    kubectl label namespace default knative-eventing-injection=enabled
    ```
+   
+1. Verify the Broker is ready.
 
-1. Create a GCP PubSub Topic. If you change its name (`testing`), you also need
-   to update the `topic` in the
-   [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml) file:
+   ```shell
+   kubectl get broker namespace default
+   ```
+
+
+1. Create a Google Cloud Pub/Sub topic called `testing`:
 
    ```shell
    gcloud pubsub topics create testing
    ```
 
-1. Replace the
-   [`MY_GCP_PROJECT` placeholder](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
-   in [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml) and apply it.
+1. Replace `MY_GCP_PROJECT` with your Google Cloud Project in the following snippet and 
+install the importer. You can save the snippet below into its own yaml file and then do 
+`kubectl apply -f <filename>`.
 
-   If you're in the samples directory, you can replace `MY_GCP_PROJECT` and
-   apply in one command:
+    ```yaml
+    apiVersion: sources.eventing.knative.dev/v1alpha1
+    kind: GcpPubSubSource
+    metadata:
+      name: pubsub-test
+      namespace: default
+    spec:
+      gcpCredsSecret:
+        name: google-cloud-key
+        key: key.json
+      googleCloudProject: MY_GCP_PROJECT  # Replace this
+      topic: testing
+      sink:
+        apiVersion: eventing.knative.dev/v1alpha1
+        kind: Broker
+        name: default
+    ```
 
-   ```shell
-   sed "s/MY_GCP_PROJECT/$PROJECT_ID/g" gcp-pubsub-source.yaml | \
-       kubectl apply --filename -
-   ```
+1. Verify the importer was installed and is ready. You have to check in the `Status` conditions for the 
+`Ready` condition.
 
-   If you are replacing `MY_GCP_PROJECT` manually, then make sure you apply the
-   resulting YAML:
-
-   ```shell
-   kubectl apply --filename gcp-pubsub-source.yaml
-   ```
-
-1. Create a function and create a Trigger that will send all events from the
-   Broker to the function:
-
-   ```shell
-   kubectl apply --filename trigger.yaml
-   ```
-
-## Publish
-
-Publish messages to your GCP PubSub Topic:
-
-```shell
-gcloud pubsub topics publish testing --message="Hello world"
-```
-
-## Verify
-
-We will verify that the published message was sent into the Knative eventing
-system by looking at the logs of the function subscribed to the `pubsub-test`
-channel.
-
-The function and the subscription were created by applying the
-[`trigger.yaml`](./trigger.yaml) manifest in the [deployment](#deployment)
-section above.
-
-1. We need to wait for the downstream pods to get started and receive our event,
-   wait 60 seconds.
-
-   - You can check the status of the downstream pods with:
-
-     ```shell
-     kubectl get pods --selector serving.knative.dev/service=event-display
-     ```
-
-     You should see at least one.
-
-1. Inspect the logs of the subscriber:
+    ```shell
+    kubectl describe gcppubsubsources pubsub-test
+    ```
+    
+1. Discover the events you can now consume by querying the registry.
 
    ```shell
-   kubectl logs --selector serving.knative.dev/service=event-display -c user-container
+   kubectl get eventtypes -n default
    ```
+   
+   You should see an output similar to the following one: 
 
-You should see log lines similar to:
+    ```
+    NAME                                   TYPE                                SOURCE                                              SCHEMA        BROKER      DESCRIPTION     READY     REASON
+    google.pubsub.topic.publish-hrxhh      google.pubsub.topic.publish         //pubsub.googleapis.com/knative/topics/testing                    default                     True      
+    ```
 
-```json
-{
-  "ID": "284375451531353",
-  "Data": "SGVsbG8sIHdvcmxk",
-  "Attributes": null,
-  "PublishTime": "2018-10-31T00:00:00.00Z"
-}
-```
+1. Create the Deployment and Service that will act as the event consumer. You can save the snippets below into 
+their own yaml files and then apply them with `kubectl apply -f <filename>`. 
 
-The log message is a dump of the message sent by `GCP PubSub`. In particular, if
-you [base-64 decode](https://www.base64decode.org/) the `Data` field, you should
-see the sent message:
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: event-display
+    spec:
+      replicas: 1
+      selector:
+        matchLabels: &labels
+          app: event-display
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          containers:
+            - name: event-display
+              image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display@sha256:37ace92b63fc516ad4c8331b6b3b2d84e4ab2d8ba898e387c0b6f68f0e3081c4
+    ```
+    
+    ```yaml
+    kind: Service
+    apiVersion: v1
+    metadata:
+      name: event-display
+    spec:
+      selector:
+        app: event-display
+      ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 8080
+    ```    
 
-```shell
-echo "SGVsbG8sIHdvcmxk" | base64 --decode
-```
+1. Verify the deployment was created and is ready:
 
-Results in: "Hello world"
+    ```shell
+    kubectl get deployments -n default
+    ```
 
-For more information about the format of the message, see the
-[PubsubMessage documentation](https://cloud.google.com/pubsub/docs/reference/rest/v1/PubsubMessage).
+    In particular, we want the number in the DESIRED column to match the number in the AVAILABLE column. This may take 
+    few minutes.    
+    
+1. Verify the service was created:
+
+    ```shell
+    kubectl get services -n default
+    ```    
+
+1. Create a Trigger to subscribe to the Google Cloud Pub/Sub events from the `testing` topic on the `default` Broker:
+
+    ```yaml
+    apiVersion: eventing.knative.dev/v1alpha1
+    kind: Trigger
+    metadata:
+      name: my-trigger
+      namespace: default
+    spec:
+      broker: default
+      filter:
+        sourceAndType:
+          type: google.pubsub.topic.publish
+          source: //pubsub.googleapis.com/knative/topics/testing
+      subscriber:
+        ref:
+         apiVersion: v1
+         kind: Service
+         name: event-display
+    ```
+    
+1. Verify the Trigger was created and is ready:
+    
+    ```shell
+    kubectl get triggers -n default
+    ```
+    
+1. Publish a message to your Google Cloud Pub/Sub Topic:
+
+    ```shell
+    gcloud pubsub topics publish testing --message="Hello world"
+    ```
+
+1. Verify that the published message was sent into your Knative cluster by looking at the logs of the `event-display` pod.
+
+    ```shell
+    kubectl -n kn-eventing-registry-demo logs -l app=event-display
+    ```
+    You should see log lines similar to:
+
+    ```
+    ☁️   cloudevents.Event
+    Validation: valid
+    Context Attributes,
+      specversion: 0.2
+      type: google.pubsub.topic.publish
+      source: //pubsub.googleapis.com/knative/topics/testing
+      id: c9ba9ac5-3210-4813-841f-da2b717efsa7
+      time: 2019-05-17T19:00:00.000655717Z
+      contenttype: application/json
+    Extensions,
+      knativehistory: default-broker-d4qjc-channel-2gthx.default.svc.cluster.local
+    Data,
+        {
+          "ID": "284375451531353",
+          "Data": "SGVsbG8sIHdvcmxk",
+          "Attributes": null,
+          "PublishTime": "2019-05-17T19:00:00.000655717Z"
+        }
+    ```
+
+    The log message is a dump of the CloudEvent sent by the Google Cloud Pub/Sub Importer. 
+    In particular, if you [base-64 decode](https://www.base64decode.org/) the `Data` field, you should
+    see the sent message:
+
+    ```shell
+    echo "SGVsbG8sIHdvcmxk" | base64 --decode
+    ```
+
+    Results in: "Hello world".
+    
+## Next Steps
+
+1. Experiment with other Event Importers in your Knative cluster. <Link to GitHubSource, KafkaSource, etc.>
+1. ...         
