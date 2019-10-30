@@ -31,7 +31,7 @@ To enable delivery to multiple types of Services, Knative Eventing defines two
 generic interfaces that can be implemented by multiple Kubernetes resources:
 
 1. **Addressable** objects are able to receive and acknowledge an event
-   delivered over HTTP to an address defined in their `status.address.hostname`
+   delivered over HTTP to an address defined in their `status.address.url`
    field. As a special case, the core
    [Kubernetes Service object](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#service-v1-core)
    also fulfils the Addressable interface.
@@ -93,8 +93,7 @@ Learn more about Eventing development in the
 
 ## Installation
 
-Knative Eventing currently requires Knative Serving and Istio version 1.0 or
-later installed.
+Knative Eventing currently requires Knative Serving installed with either Istio version >=1.0, or Gloo version >=0.18.16.
 [Follow the instructions to install on the platform of your choice](../install/README.md).
 
 Many of the sources require making outbound connections to create the event
@@ -308,7 +307,7 @@ Knative Serving application so that they can be consumed.
       certificate.
 
 See the
-[Kafka Source](https://github.com/knative/eventing-contrib/tree/master/kafka/source/samples)
+[Kafka Source](https://github.com/knative/eventing-contrib/tree/master/kafka/source)
 example.
 
 ### CamelSource
@@ -351,5 +350,3 @@ example.
 
 - [Default Channels](./channels/default-channels.md) provide a way to choose the
   persistence strategy for Channels across the cluster.
-
-

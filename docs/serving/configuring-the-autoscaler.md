@@ -139,8 +139,9 @@ used to prevent cold starts or to help control computing costs.
 spec:
   template:
     metadata:
-      autoscaling.knative.dev/minScale: "2"
-      autoscaling.knative.dev/maxScale: "10"
+      annotations:
+        autoscaling.knative.dev/minScale: "2"
+        autoscaling.knative.dev/maxScale: "10"
 ```
 
 Using these annotations in the revision template will propagate this to
@@ -178,9 +179,12 @@ template.
 spec:
   template:
     metadata:
-      autoscaling.knative.dev/metric: concurrency
-      autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
+      annotations:
+        autoscaling.knative.dev/metric: cpu
+        autoscaling.knative.dev/target: 70
+        autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
 ```
+
 
 ## Additional resources
 

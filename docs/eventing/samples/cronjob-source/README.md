@@ -21,7 +21,7 @@ In order to verify `CronJobSource` is working, we will create a simple Knative
 Service that dumps incoming messages to its log.
 
 ```yaml
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: event-display
@@ -54,7 +54,7 @@ spec:
   schedule: "*/2 * * * *"
   data: '{"message": "Hello world!"}'
   sink:
-    apiVersion: serving.knative.dev/v1alpha1
+    apiVersion: serving.knative.dev/v1
     kind: Service
     name: event-display
 ```
@@ -77,18 +77,16 @@ kubectl logs -l serving.knative.dev/service=event-display -c user-container --si
 You should see log lines showing the request headers and body from the source:
 
 ```
-2019/03/14 14:28:06 Message Dumper received a message: POST / HTTP/1.1
-Host: event-display.default.svc.cluster.local
-Transfer-Encoding: chunked
-Accept-Encoding: gzip
-Ce-Cloudeventsversion: 0.1
-Ce-Eventid: 9790bf44-914a-4e66-af59-b43c06ccb73b
-Ce-Eventtime: 2019-03-14T14:28:00.005163309Z
-Ce-Eventtype: dev.knative.cronjob.event
-Ce-Source: CronJob
-...
-
-{"message":"Hello world!"}
+☁️  cloudevents.Event
+Validation: valid
+Context Attributes,
+  specversion: 0.3
+  type: dev.knative.cronjob.event
+  source: /apis/v1/namespaces/default/cronjobsources/test-cronjob-source
+  id: 7f88a38f-35f1-41f6-b72d-6b1af1d64e6e
+  time: 2019-10-18T15:18:00.000829514Z
+Data,
+  {"message":"Hello world!"}
 ```
 
 You can also use [`kail`](https://github.com/boz/kail) instead of `kubectl logs`
