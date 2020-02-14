@@ -57,7 +57,7 @@ without automatic sidecar injection.
 
    ```shell
    # Download and unpack Istio
-   export ISTIO_VERSION=1.1.7
+   export ISTIO_VERSION=1.3.6
    curl -L https://git.io/getLatestIstio | sh -
    cd istio-${ISTIO_VERSION}
    ```
@@ -124,6 +124,7 @@ helm template --namespace=istio-system \
   --set gateways.istio-ingressgateway.autoscaleMax=2 \
   `# Set pilot trace sampling to 100%` \
   --set pilot.traceSampling=100 \
+  --set global.mtls.auto=false \
   install/kubernetes/helm/istio \
   > ./istio-lean.yaml
 
@@ -219,9 +220,9 @@ helm template --namespace=istio-system \
 ### Updating your install to use cluster local gateway
 
 If you want your Routes to be visible only inside the cluster, you may want to
-enable [cluster local routes](../serving/cluster-local-route.md). To use
-this feature, add an extra Istio cluster local gateway to your cluster. Enter
-the following command to add the cluster local gateway to an existing Istio
+enable [cluster local routes](../serving/cluster-local-route.md). To use this
+feature, add an extra Istio cluster local gateway to your cluster. Enter the
+following command to add the cluster local gateway to an existing Istio
 installation:
 
 ```shell
@@ -236,6 +237,7 @@ helm template --namespace=istio-system \
   --set gateways.istio-ingressgateway.enabled=false \
   --set gateways.istio-egressgateway.enabled=false \
   --set gateways.istio-ilbgateway.enabled=false \
+  --set global.mtls.auto=false \
   install/kubernetes/helm/istio \
   -f install/kubernetes/helm/istio/example-values/values-istio-gateways.yaml \
   | sed -e "s/custom-gateway/cluster-local-gateway/g" -e "s/customgateway/clusterlocalgateway/g" \
@@ -243,6 +245,21 @@ helm template --namespace=istio-system \
 
 kubectl apply -f istio-local-gateway.yaml
 ```
+
+Alternatively, if you want to install the cluster local gateway for **development purposes**, enter the following command 
+without `helm` for an easy installation:
+
+```shell
+# Istio minor version should be 1.2 or 1.3
+export ISTIO_MINOR_VERSION=1.2
+
+export VERSION=$(curl https://raw.githubusercontent.com/knative/serving/master/third_party/istio-${ISTIO_MINOR_VERSION}-latest)
+
+kubectl apply -f https://raw.githubusercontent.com/knative/serving/master/third_party/${VERSION}/istio-knative-extras.yaml
+```
+
+**Note:** This method is only for development purposes. The production readiness of the above 
+installation method is not ensured. For a production-ready installation, see the `helm` installation method above.
 
 ### Verifying your Istio install
 
@@ -257,12 +274,12 @@ kubectl get pods --namespace istio-system
 > Tip: You can append the `--watch` flag to the `kubectl get` commands to view
 > the pod status in realtime. You use `CTRL + C` to exit watch mode.
 
-
 ### Configuring DNS
 
 Knative dispatches to different services based on their hostname, so it greatly
 simplifies things to have DNS properly configured. For this, we must look up the
-external IP address that Gloo received. This can be done with the following command:
+external IP address that Istio received. This can be done with the following
+command:
 
 ```
 $ kubectl get svc -nistio-system

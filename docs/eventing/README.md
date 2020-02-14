@@ -75,7 +75,7 @@ a
 Each channel is a separate Kubernetes [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 Events are delivered to Services or forwarded to other channels
 (possibly of a different type) using
-[Subscriptions](https://github.com/knative/eventing/blob/master/pkg/apis/eventing/v1alpha1/subscription_types.go#L35).
+[Subscriptions](https://github.com/knative/eventing/blob/master/pkg/apis/messaging/v1alpha1/subscription_types.go).
 This allows message delivery in a cluster to vary based on requirements, so that
 some events might be handled by an in-memory implementation while others would
 be persisted using Apache Kafka or NATS Streaming.
@@ -98,11 +98,12 @@ event sources. Sources manage registration and delivery of events from external
 systems using Kubernetes
 [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 Learn more about Eventing development in the
-[Eventing work group](../../contributing/WORKING-GROUPS.md#events).
+[Eventing work group](https://github.com/knative/community/tree/master/WORKING-GROUPS.md#eventing).
 
 ## Installation
 
-Knative Eventing currently requires Knative Serving installed with either Istio version >=1.0, or Gloo version >=0.18.16.
+Knative Eventing currently requires Knative Serving installed with either Istio version >=1.0,
+Contour version >=1.1, or Gloo version >=0.18.16.
 [Follow the instructions to install on the platform of your choice](../install/README.md).
 
 ## Architecture
@@ -117,7 +118,7 @@ The eventing infrastructure supports two forms of event delivery at the moment:
    using
    [Channels](https://github.com/knative/eventing/blob/master/pkg/apis/messaging/v1alpha1/channel_types.go#L57)
    and
-   [Subscriptions](https://github.com/knative/eventing/blob/master/pkg/apis/eventing/v1alpha1/subscription_types.go#L35).
+   [Subscriptions](https://github.com/knative/eventing/blob/master/pkg/apis/messaging/v1alpha1/subscription_types.go).
    In this case, the Channel implementation ensures that messages are delivered
    to the requested destinations and should buffer the events if the destination
    Service is unavailable.
@@ -147,7 +148,9 @@ In addition to the core sources (explained below), there are
 
 If you need a Source not covered by the
 [available Source implementations](./sources/README.md), there is a
-[tutorial on writing your own Source](./samples/writing-a-source/README.md).
+[tutorial on writing your own Source with kubebuilder](./samples/writing-a-source/README.md) as
+well as an
+[extended tutorial on writing a Source with Receive Adapter](./samples/writing-receive-adapter-source).
 
 If your code needs to send events as part of its business logic and doesn't fit
 the model of a Source, consider
@@ -311,7 +314,7 @@ Knative Serving application so that they can be consumed.
       certificate.
 
 See the
-[Kafka Source](https://github.com/knative/eventing-contrib/tree/{{< branch >}}/kafka/source)
+[Kafka Source](https://github.com/knative/eventing-contrib/tree/master/kafka/source)
 example.
 
 ### CamelSource
@@ -341,7 +344,7 @@ to be installed into the current namespace.
   development purposes.
 
 See the
-[CamelSource](https://github.com/knative/eventing-contrib/tree/{{< branch >}}/camel/source/samples)
+[CamelSource](https://github.com/knative/eventing-contrib/tree/master/camel/source/samples)
 example.
 
 ## Getting Started

@@ -12,7 +12,7 @@ focus on solving mundane but difficult tasks such as:
 
 - [Deploying a container](./serving/getting-started-knative-app.md)
 - [Routing and managing traffic with blue/green deployment](./serving/samples/blue-green-deployment.md)
-- [Scaling automatically and sizing workloads based on demand](./serving/autoscaling.md)
+- [Scaling automatically and sizing workloads based on demand](./serving/configuring-autoscaling.md)
 - [Binding running services to eventing ecosystems](./eventing/samples/kubernetes-event-source/)
 
 Developers on Knative can use familiar idioms, languages, and frameworks to
@@ -56,7 +56,7 @@ separation between pluggable components, the Knative project establishes an
 efficient contributor workflow.
 
 Knative is a diverse, open, and inclusive community. To get involved, see
-[CONTRIBUTING.md](../contributing/CONTRIBUTING.md) and join the
+[CONTRIBUTING.md](https://github.com/knative/community/tree/master/CONTRIBUTING.md) and join the
 [Knative community](../community/).
 
 Your own path to becoming a Knative contributor can begin in any of the

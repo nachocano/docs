@@ -94,7 +94,7 @@ kubectl apply --filename serviceaccount.yaml
    block below into it.
 
 ```yaml
-apiVersion: sources.eventing.knative.dev/v1alpha1
+apiVersion: sources.knative.dev/v1alpha1
 kind: ApiServerSource
 metadata:
   name: testevents
@@ -106,9 +106,10 @@ spec:
     - apiVersion: v1
       kind: Event
   sink:
-    apiVersion: eventing.knative.dev/v1alpha1
-    kind: Broker
-    name: default
+    ref:
+      apiVersion: eventing.knative.dev/v1alpha1
+      kind: Broker
+      name: default
 ```
 
 If you want to consume events from a different namespace or use a different
@@ -154,8 +155,8 @@ spec:
     spec:
       containers:
         - # This corresponds to
-          # https://github.com/knative/eventing-contrib/blob/release-0.5/cmd/event_display/main.go
-          image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display@sha256:bf45b3eb1e7fc4cb63d6a5a6416cf696295484a7662e0cf9ccdf5c080542c21d
+          # https://github.com/knative/eventing-contrib/tree/master/cmd/event_display/main.go
+          image: gcr.io/knative-releases/github.com/knative/eventing-contrib/cmd/event_display
 ```
 
 1. If the deployed `ApiServerSource` is pointing at a `Broker` other than
@@ -196,12 +197,13 @@ You should see log lines similar to:
 ☁️  cloudevents.Event
 Validation: valid
 Context Attributes,
-  specversion: 0.3
-  type: dev.knative.apiserver.resource.add
+  specversion: 1.0
+  type: dev.knative.apiserver.resource.update
   source: https://10.96.0.1:443
-  subject: /apis/v1/namespaces/default/events/busybox.15cec7980c1702d1
-  id: 6ea84c37-c2b4-4687-866b-fb1b2c0fe969
-  time: 2019-10-18T15:32:55.855413776Z
+  subject: /apis/v1/namespaces/default/events/testevents.15dd3050eb1e6f50
+  id: e0447eb7-36b5-443b-9d37-faf4fe5c62f0
+  time: 2019-12-04T14:09:30.917608978Z
+  datacontenttype: application/json
 Data,
   {
     "apiVersion": "v1",
