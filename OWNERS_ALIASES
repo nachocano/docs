@@ -2,7 +2,7 @@ aliases:
   eng-approvers:
   - evankanderson
   - mattmoor
-  - dgerd
+  - dprotaso
   - vaikas
   - rgregg
   - mchmarny
@@ -28,24 +28,37 @@ aliases:
   - yt3liu
 
   serving-eng-reviewers:
-  - dgerd
   - dprotaso
   - markusthoemmes
   - mattmoor
   - tcnghia
   - vagababov
 
+  eventing-eng-approvers:
+  - grantr
+  - lionelvillard
+  - vaikas
+
   eventing-eng-reviewers:
   - evankanderson
   - grantr
-  - vaikas
-  - n3wscott
-  - matzew
-  - nachocano
   - lionelvillard
+  - matzew
+  - n3wscott
+  - nachocano
+  - vaikas
+
+  eventing-channels-eng-approvers:
+  - Harwayne
+  - matzew
+
+  eventing-sources-eng-approvers:
+  - lionelvillard
+  - n3wscott
+  - nachocano
+  - vaikas
 
   install-eng-reviewers:
-  - dgerd
   - dprotaso
   - markusthoemmes
   - mattmoor
