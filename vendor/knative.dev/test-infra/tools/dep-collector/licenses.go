@@ -18,7 +18,6 @@ package main
 
 import (
 	"fmt"
-	gb "go/build"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -27,6 +26,48 @@ import (
 
 	"github.com/google/licenseclassifier"
 )
+
+// Type identifies a class of software license.
+type Type string
+
+// License types
+const (
+	// Unknown license type.
+	Unknown = Type("")
+	// Restricted licenses require mandatory source distribution if we ship a
+	// product that includes third-party code protected by such a license.
+	Restricted = Type("restricted")
+	// Reciprocal licenses allow usage of software made available under such
+	// licenses freely in *unmodified* form. If the third-party source code is
+	// modified in any way these modifications to the original third-party
+	// source code must be made available.
+	Reciprocal = Type("reciprocal")
+	// Notice licenses contain few restrictions, allowing original or modified
+	// third-party software to be shipped in any product without endangering or
+	// encumbering our source code. All of the licenses in this category do,
+	// however, have an "original Copyright notice" or "advertising clause",
+	// wherein any external distributions must include the notice or clause
+	// specified in the license.
+	Notice = Type("notice")
+	// Permissive licenses are even more lenient than a 'notice' license.
+	// Not even a copyright notice is required for license compliance.
+	Permissive = Type("permissive")
+	// Unencumbered covers licenses that basically declare that the code is "free for any use".
+	Unencumbered = Type("unencumbered")
+	// Forbidden licenses are forbidden to be used.
+	Forbidden = Type("FORBIDDEN")
+)
+
+func (t Type) String() string {
+	switch t {
+	case Unknown:
+		// licenseclassifier uses an empty string to indicate an unknown license
+		// type, which is unclear to users when printed as a string.
+		return "unknown"
+	default:
+		return string(t)
+	}
+}
 
 var LicenseNames = []string{
 	"LICENCE",
@@ -53,32 +94,32 @@ func (lf *LicenseFile) Body() (string, error) {
 	return string(body), nil
 }
 
-func (lt *LicenseFile) Classify(classifier *licenseclassifier.License) (string, error) {
-	body, err := lt.Body()
+func (lf *LicenseFile) Classify(classifier *licenseclassifier.License) (string, error) {
+	body, err := lf.Body()
 	if err != nil {
 		return "", err
 	}
 	m := classifier.NearestMatch(body)
 	if m == nil {
-		return "", fmt.Errorf("unable to classify license: %v", lt.EnclosingImportPath)
+		return "", fmt.Errorf("unable to classify license: %v", lf.EnclosingImportPath)
 	}
 	return m.Name, nil
 }
 
-func (lt *LicenseFile) Check(classifier *licenseclassifier.License) error {
-	body, err := lt.Body()
+func (lf *LicenseFile) Check(classifier *licenseclassifier.License) error {
+	body, err := lf.Body()
 	if err != nil {
 		return err
 	}
 	ms := classifier.MultipleMatch(body, false)
 	for _, m := range ms {
-		return fmt.Errorf("Found matching forbidden license in %q: %v", lt.EnclosingImportPath, m.Name)
+		return fmt.Errorf("found matching forbidden license in %q: %v", lf.EnclosingImportPath, m.Name)
 	}
 	return nil
 }
 
-func (lt *LicenseFile) Entry() (string, error) {
-	body, err := lt.Body()
+func (lf *LicenseFile) Entry() (string, error) {
+	body, err := lf.Body()
 	if err != nil {
 		return "", err
 	}
@@ -87,38 +128,34 @@ func (lt *LicenseFile) Entry() (string, error) {
 Import: %s
 
 %s
-`, lt.EnclosingImportPath, body), nil
+`, lf.EnclosingImportPath, body), nil
 }
 
-func (lt *LicenseFile) CSVRow(classifier *licenseclassifier.License) (string, error) {
-	classification, err := lt.Classify(classifier)
+func (lf *LicenseFile) CSVRow(classifier *licenseclassifier.License) (string, error) {
+	classification, err := lf.Classify(classifier)
 	if err != nil {
 		return "", err
 	}
-	parts := strings.Split(lt.EnclosingImportPath, "/vendor/")
+	parts := strings.Split(lf.EnclosingImportPath, "/vendor/")
 	if len(parts) != 2 {
-		return "", fmt.Errorf("wrong number of parts splitting import path on %q : %q", "/vendor/", lt.EnclosingImportPath)
+		return "", fmt.Errorf("wrong number of parts splitting import path on %q : %q", "/vendor/", lf.EnclosingImportPath)
 	}
 	return strings.Join([]string{
 		parts[1],
 		"Static",
 		"", // TODO(mattmoor): Modifications?
-		"https://" + parts[0] + "/blob/master/vendor/" + parts[1] + "/" + filepath.Base(lt.LicensePath),
+		"https://" + parts[0] + "/blob/master/vendor/" + parts[1] + "/" + filepath.Base(lf.LicensePath),
 		classification,
 	}, ","), nil
 }
 
-func findLicense(ip string) (*LicenseFile, error) {
-	pkg, err := gb.Import(ip, WorkingDir, gb.ImportComment)
-	if err != nil {
-		return nil, err
-	}
-	dir := pkg.Dir
-
+func findLicense(ii ImportInfo) (*LicenseFile, error) {
+	dir := ii.Dir
+	ip := ii.ImportPath
 	for {
 		// When we reach the root of our workspace, stop searching.
 		if dir == WorkingDir {
-			return nil, fmt.Errorf("unable to find license for %q", pkg.ImportPath)
+			return nil, fmt.Errorf("unable to find license for %q", ip)
 		}
 
 		for _, name := range LicenseNames {
@@ -168,8 +205,12 @@ func (lc LicenseCollection) CSV(classifier *licenseclassifier.License) (string, 
 func (lc LicenseCollection) Check(classifier *licenseclassifier.License) error {
 	errors := []string{}
 	for _, entry := range lc {
-		if err := entry.Check(classifier); err != nil {
-			errors = append(errors, err.Error())
+		licenseName, licenseType, err := entry.Identify(entry.LicensePath, classifier)
+		if err != nil {
+			return err
+		}
+		if licenseType == Forbidden {
+			errors = append(errors, fmt.Sprintf("Forbidden license type %s for library %v\n", licenseName, entry))
 		}
 	}
 	if len(errors) == 0 {
@@ -178,11 +219,30 @@ func (lc LicenseCollection) Check(classifier *licenseclassifier.License) error {
 	return fmt.Errorf("Errors validating licenses:\n%v", strings.Join(errors, "\n"))
 }
 
-func CollectLicenses(imports []string) (LicenseCollection, error) {
+// Identify returns the name and type of a license, given its file path.
+// An empty license path results in an empty name and Unknown type.
+func (lf *LicenseFile) Identify(licensePath string, classifier *licenseclassifier.License) (string, Type, error) {
+	if licensePath == "" {
+		return "", Unknown, nil
+	}
+	content, err := ioutil.ReadFile(licensePath)
+	if err != nil {
+		return "", "", err
+	}
+	matches := classifier.MultipleMatch(string(content), true)
+	if len(matches) == 0 {
+		return "", "", fmt.Errorf("unknown license")
+	}
+	licenseName := matches[0].Name
+	return licenseName, Type(licenseclassifier.LicenseType(licenseName)), nil
+}
+
+// CollectLicenses collects a list of licenses for the given imports.
+func CollectLicenses(importInfos []ImportInfo) (LicenseCollection, error) {
 	// for each of the import paths, search for a license file.
 	licenseFiles := make(map[string]*LicenseFile)
-	for _, ip := range imports {
-		lf, err := findLicense(ip)
+	for _, info := range importInfos {
+		lf, err := findLicense(info)
 		if err != nil {
 			return nil, err
 		}

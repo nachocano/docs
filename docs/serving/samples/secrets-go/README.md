@@ -1,10 +1,3 @@
----
-title: "Knative Secrets - Go"
-linkTitle: "Secrets - Go"
-weight: 1
-type: "docs"
----
-
 A simple web app written in Go that you can use for testing. It demonstrates how
 to use a Kubernetes secret as a Volume with Knative. We will create a new Google
 Service Account and place it into a Kubernetes secret, then we will mount it
@@ -16,7 +9,7 @@ following commands:
 
 ```shell
 git clone -b "{{< branch >}}" https://github.com/knative/docs knative-docs
-cd knative-docs/serving/samples/secrets-go
+cd knative-docs/docs/serving/samples/secrets-go
 ```
 
 ## Before you begin
@@ -96,7 +89,7 @@ cd knative-docs/serving/samples/secrets-go
    [Deploying Go servers with Docker](https://blog.golang.org/docker).
 
    ```docker
-   # Use the offical Golang image to create a build artifact.
+   # Use the official Golang image to create a build artifact.
    # This is based on Debian and sets the GOPATH to /go.
    # https://hub.docker.com/_/golang
    FROM golang as builder

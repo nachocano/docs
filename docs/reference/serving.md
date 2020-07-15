@@ -4,9 +4,6 @@
 <a href="#autoscaling.internal.knative.dev%2fv1alpha1">autoscaling.internal.knative.dev/v1alpha1</a>
 </li>
 <li>
-<a href="#networking.internal.knative.dev%2fv1alpha1">networking.internal.knative.dev/v1alpha1</a>
-</li>
-<li>
 <a href="#serving.knative.dev%2fv1">serving.knative.dev/v1</a>
 </li>
 <li>
@@ -60,7 +57,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -120,7 +117,7 @@ Defaults to <code>0</code> which means unlimited concurrency.</p>
 <td>
 <code>scaleTargetRef</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectreference-v1-core">
 Kubernetes core/v1.ObjectReference
 </a>
 </em>
@@ -149,7 +146,7 @@ Defaults to <code>ReachabilityUnknown</code></p>
 <td>
 <code>protocolType</code></br>
 <em>
-knative.dev/serving/pkg/apis/networking.ProtocolType
+knative.dev/networking/pkg/apis/networking.ProtocolType
 </em>
 </td>
 <td>
@@ -192,7 +189,7 @@ PodAutoscalerStatus
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -405,7 +402,7 @@ Defaults to <code>0</code> which means unlimited concurrency.</p>
 <td>
 <code>scaleTargetRef</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectreference-v1-core">
 Kubernetes core/v1.ObjectReference
 </a>
 </em>
@@ -434,7 +431,7 @@ Defaults to <code>ReachabilityUnknown</code></p>
 <td>
 <code>protocolType</code></br>
 <em>
-knative.dev/serving/pkg/apis/networking.ProtocolType
+knative.dev/networking/pkg/apis/networking.ProtocolType
 </em>
 </td>
 <td>
@@ -542,7 +539,7 @@ the referenced resources may take.</p>
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -579,7 +576,7 @@ int32
 <td>
 <code>selector</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#labelselector-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#labelselector-v1-meta">
 Kubernetes meta/v1.LabelSelector
 </a>
 </em>
@@ -591,7 +588,7 @@ Kubernetes meta/v1.LabelSelector
 <td>
 <code>template</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#podtemplatespec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podtemplatespec-v1-core">
 Kubernetes core/v1.PodTemplateSpec
 </a>
 </em>
@@ -648,7 +645,7 @@ int32
 <td>
 <code>selector</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#labelselector-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#labelselector-v1-meta">
 Kubernetes meta/v1.LabelSelector
 </a>
 </em>
@@ -660,7 +657,7 @@ Kubernetes meta/v1.LabelSelector
 <td>
 <code>template</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#podtemplatespec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podtemplatespec-v1-core">
 Kubernetes core/v1.PodTemplateSpec
 </a>
 </em>
@@ -710,1420 +707,6 @@ int32
 <p>ReachabilityType is the enumeration type for the different states of reachability
 to the <code>ScaleTarget</code> of a <code>PodAutoscaler</code></p>
 </p>
-<hr/>
-<h2 id="networking.internal.knative.dev/v1alpha1">networking.internal.knative.dev/v1alpha1</h2>
-<p>
-</p>
-Resource Types:
-<ul><li>
-<a href="#networking.internal.knative.dev/v1alpha1.Certificate">Certificate</a>
-</li><li>
-<a href="#networking.internal.knative.dev/v1alpha1.Ingress">Ingress</a>
-</li><li>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessService">ServerlessService</a>
-</li></ul>
-<h3 id="networking.internal.knative.dev/v1alpha1.Certificate">Certificate
-</h3>
-<p>
-<p>Certificate is responsible for provisioning a SSL certificate for the
-given hosts. It is a Knative abstraction for various SSL certificate
-provisioning solutions (such as cert-manager or self-signed SSL certificate).</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>apiVersion</code></br>
-string</td>
-<td>
-<code>
-networking.internal.knative.dev/v1alpha1
-</code>
-</td>
-</tr>
-<tr>
-<td>
-<code>kind</code></br>
-string
-</td>
-<td><code>Certificate</code></td>
-</tr>
-<tr>
-<td>
-<code>metadata</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
-Kubernetes meta/v1.ObjectMeta
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Standard object&rsquo;s metadata.
-More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
-Refer to the Kubernetes API documentation for the fields of the
-<code>metadata</code> field.
-</td>
-</tr>
-<tr>
-<td>
-<code>spec</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.CertificateSpec">
-CertificateSpec
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Spec is the desired state of the Certificate.
-More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status</a></p>
-<br/>
-<br/>
-<table>
-<tr>
-<td>
-<code>dnsNames</code></br>
-<em>
-[]string
-</em>
-</td>
-<td>
-<p>DNSNames is a list of DNS names the Certificate could support.
-The wildcard format of DNSNames (e.g. *.default.example.com) is supported.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>secretName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SecretName is the name of the secret resource to store the SSL certificate in.</p>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td>
-<code>status</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.CertificateStatus">
-CertificateStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Status is the current state of the Certificate.
-More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.Ingress">Ingress
-</h3>
-<p>
-<p>Ingress is a collection of rules that allow inbound connections to reach the endpoints defined
-by a backend. An Ingress can be configured to give services externally-reachable URLs, load
-balance traffic, offer name based virtual hosting, etc.</p>
-<p>This is heavily based on K8s Ingress <a href="https://pkg.go.dev/k8s.io/api/networking/v1beta1#Ingress">https://pkg.go.dev/k8s.io/api/networking/v1beta1#Ingress</a>
-which some highlighted modifications.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>apiVersion</code></br>
-string</td>
-<td>
-<code>
-networking.internal.knative.dev/v1alpha1
-</code>
-</td>
-</tr>
-<tr>
-<td>
-<code>kind</code></br>
-string
-</td>
-<td><code>Ingress</code></td>
-</tr>
-<tr>
-<td>
-<code>metadata</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
-Kubernetes meta/v1.ObjectMeta
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Standard object&rsquo;s metadata.
-More info: <a href="https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata">https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata</a></p>
-Refer to the Kubernetes API documentation for the fields of the
-<code>metadata</code> field.
-</td>
-</tr>
-<tr>
-<td>
-<code>spec</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressSpec">
-IngressSpec
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Spec is the desired state of the Ingress.
-More info: <a href="https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status">https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status</a></p>
-<br/>
-<br/>
-<table>
-<tr>
-<td>
-<code>generation</code></br>
-<em>
-int64
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedGeneration was used prior in Kubernetes versions <1.11
-when metadata.generation was not being incremented by the api server</p>
-<p>This property will be dropped in future Knative releases and should
-not be used - use metadata.generation</p>
-<p>Tracking issue: <a href="https://github.com/knative/serving/issues/643">https://github.com/knative/serving/issues/643</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<code>tls</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressTLS">
-[]IngressTLS
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>TLS configuration. Currently Ingress only supports a single TLS
-port: 443. If multiple members of this list specify different hosts, they
-will be multiplexed on the same port according to the hostname specified
-through the SNI TLS extension, if the ingress controller fulfilling the
-ingress supports SNI.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>rules</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressRule">
-[]IngressRule
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>A list of host rules used to configure the Ingress.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>visibility</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressVisibility">
-IngressVisibility
-</a>
-</em>
-</td>
-<td>
-<p>Visibility setting.</p>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td>
-<code>status</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressStatus">
-IngressStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Status is the current state of the Ingress.
-More info: <a href="https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status">https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.ServerlessService">ServerlessService
-</h3>
-<p>
-<p>ServerlessService is a proxy for the K8s service objects containing the
-endpoints for the revision, whether those are endpoints of the activator or
-revision pods.
-See: <a href="https://knative.page.link/naxz">https://knative.page.link/naxz</a> for details.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>apiVersion</code></br>
-string</td>
-<td>
-<code>
-networking.internal.knative.dev/v1alpha1
-</code>
-</td>
-</tr>
-<tr>
-<td>
-<code>kind</code></br>
-string
-</td>
-<td><code>ServerlessService</code></td>
-</tr>
-<tr>
-<td>
-<code>metadata</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
-Kubernetes meta/v1.ObjectMeta
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Standard object&rsquo;s metadata.
-More info: <a href="https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata">https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata</a></p>
-Refer to the Kubernetes API documentation for the fields of the
-<code>metadata</code> field.
-</td>
-</tr>
-<tr>
-<td>
-<code>spec</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessServiceSpec">
-ServerlessServiceSpec
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Spec is the desired state of the ServerlessService.
-More info: <a href="https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status">https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status</a></p>
-<br/>
-<br/>
-<table>
-<tr>
-<td>
-<code>mode</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessServiceOperationMode">
-ServerlessServiceOperationMode
-</a>
-</em>
-</td>
-<td>
-<p>Mode describes the mode of operation of the ServerlessService.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>objectRef</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
-Kubernetes core/v1.ObjectReference
-</a>
-</em>
-</td>
-<td>
-<p>ObjectRef defines the resource that this ServerlessService
-is responsible for making &ldquo;serverless&rdquo;.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>ProtocolType</code></br>
-<em>
-knative.dev/serving/pkg/apis/networking.ProtocolType
-</em>
-</td>
-<td>
-<p>The application-layer protocol. Matches <code>RevisionProtocolType</code> set on the owning pa/revision.
-serving imports networking, so just use string.</p>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td>
-<code>status</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessServiceStatus">
-ServerlessServiceStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Status is the current state of the ServerlessService.
-More info: <a href="https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status">https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.CertificateSpec">CertificateSpec
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.Certificate">Certificate</a>)
-</p>
-<p>
-<p>CertificateSpec defines the desired state of a <code>Certificate</code>.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>dnsNames</code></br>
-<em>
-[]string
-</em>
-</td>
-<td>
-<p>DNSNames is a list of DNS names the Certificate could support.
-The wildcard format of DNSNames (e.g. *.default.example.com) is supported.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>secretName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SecretName is the name of the secret resource to store the SSL certificate in.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.CertificateStatus">CertificateStatus
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.Certificate">Certificate</a>)
-</p>
-<p>
-<p>CertificateStatus defines the observed state of a <code>Certificate</code>.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>Status</code></br>
-<em>
-knative.dev/pkg/apis/duck/v1.Status
-</em>
-</td>
-<td>
-<p>
-(Members of <code>Status</code> are embedded into this type.)
-</p>
-<p>When Certificate status is ready, it means:
-- The target secret exists
-- The target secret contains a certificate that has not expired
-- The target secret contains a private key valid for the certificate</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>notAfter</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#time-v1-meta">
-Kubernetes meta/v1.Time
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>The expiration time of the TLS certificate stored in the secret named
-by this resource in spec.secretName.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>http01Challenges</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTP01Challenge">
-[]HTTP01Challenge
-</a>
-</em>
-</td>
-<td>
-<p>HTTP01Challenges is a list of HTTP01 challenges that need to be fulfilled
-in order to get the TLS certificate..</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.HTTP01Challenge">HTTP01Challenge
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.CertificateStatus">CertificateStatus</a>)
-</p>
-<p>
-<p>HTTP01Challenge defines the status of a HTTP01 challenge that a certificate needs
-to fulfill.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>url</code></br>
-<em>
-knative.dev/pkg/apis.URL
-</em>
-</td>
-<td>
-<p>URL is the URL that the HTTP01 challenge is expected to serve on.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>serviceName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>ServiceName is the name of the service to serve HTTP01 challenge requests.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>serviceNamespace</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>ServiceNamespace is the namespace of the service to serve HTTP01 challenge requests.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>servicePort</code></br>
-<em>
-k8s.io/apimachinery/pkg/util/intstr.IntOrString
-</em>
-</td>
-<td>
-<p>ServicePort is the port of the service to serve HTTP01 challenge requests.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.HTTPIngressPath">HTTPIngressPath
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTPIngressRuleValue">HTTPIngressRuleValue</a>)
-</p>
-<p>
-<p>HTTPIngressPath associates a path regex with a backend. Incoming URLs matching
-the path are forwarded to the backend.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>path</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Path is an extended POSIX regex as defined by IEEE Std 1003.1,
-(i.e this follows the egrep/unix syntax, not the perl syntax)
-matched against the path of an incoming request. Currently it can
-contain characters disallowed from the conventional &ldquo;path&rdquo;
-part of a URL as defined by RFC 3986. Paths must begin with
-a &lsquo;/&rsquo;. If unspecified, the path defaults to a catch all sending
-traffic to the backend.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>splits</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressBackendSplit">
-[]IngressBackendSplit
-</a>
-</em>
-</td>
-<td>
-<p>Splits defines the referenced service endpoints to which the traffic
-will be forwarded to.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>appendHeaders</code></br>
-<em>
-map[string]string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>AppendHeaders allow specifying additional HTTP headers to add
-before forwarding a request to the destination service.</p>
-<p>NOTE: This differs from K8s Ingress which doesn&rsquo;t allow header appending.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>timeout</code></br>
-<em>
-<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
-Kubernetes meta/v1.Duration
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Timeout for HTTP requests.</p>
-<p>NOTE: This differs from K8s Ingress which doesn&rsquo;t allow setting timeouts.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>retries</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTPRetry">
-HTTPRetry
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Retry policy for HTTP requests.</p>
-<p>NOTE: This differs from K8s Ingress which doesn&rsquo;t allow retry settings.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.HTTPIngressRuleValue">HTTPIngressRuleValue
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressRule">IngressRule</a>)
-</p>
-<p>
-<p>HTTPIngressRuleValue is a list of http selectors pointing to backends.
-In the example: http://<host>/<path>?<searchpart> -&gt; backend where
-where parts of the url correspond to RFC 3986, this resource will be used
-to match against everything after the last &lsquo;/&rsquo; and before the first &lsquo;?&rsquo;
-or &lsquo;#&rsquo;.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>paths</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTPIngressPath">
-[]HTTPIngressPath
-</a>
-</em>
-</td>
-<td>
-<p>A collection of paths that map requests to backends.</p>
-<p>If they are multiple matching paths, the first match takes precendent.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.HTTPRetry">HTTPRetry
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTPIngressPath">HTTPIngressPath</a>)
-</p>
-<p>
-<p>HTTPRetry describes the retry policy to use when a HTTP request fails.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>attempts</code></br>
-<em>
-int
-</em>
-</td>
-<td>
-<p>Number of retries for a given request.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>perTryTimeout</code></br>
-<em>
-<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
-Kubernetes meta/v1.Duration
-</a>
-</em>
-</td>
-<td>
-<p>Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE &gt;=1ms.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressBackend">IngressBackend
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressBackendSplit">IngressBackendSplit</a>)
-</p>
-<p>
-<p>IngressBackend describes all endpoints for a given service and port.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>serviceNamespace</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>Specifies the namespace of the referenced service.</p>
-<p>NOTE: This differs from K8s Ingress to allow routing to different namespaces.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>serviceName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>Specifies the name of the referenced service.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>servicePort</code></br>
-<em>
-k8s.io/apimachinery/pkg/util/intstr.IntOrString
-</em>
-</td>
-<td>
-<p>Specifies the port of the referenced service.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressBackendSplit">IngressBackendSplit
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTPIngressPath">HTTPIngressPath</a>)
-</p>
-<p>
-<p>IngressBackendSplit describes all endpoints for a given service and port.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>IngressBackend</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressBackend">
-IngressBackend
-</a>
-</em>
-</td>
-<td>
-<p>
-(Members of <code>IngressBackend</code> are embedded into this type.)
-</p>
-<p>Specifies the backend receiving the traffic split.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>percent</code></br>
-<em>
-int
-</em>
-</td>
-<td>
-<p>Specifies the split percentage, a number between 0 and 100.  If
-only one split is specified, we default to 100.</p>
-<p>NOTE: This differs from K8s Ingress to allow percentage split.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>appendHeaders</code></br>
-<em>
-map[string]string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>AppendHeaders allow specifying additional HTTP headers to add
-before forwarding a request to the destination service.</p>
-<p>NOTE: This differs from K8s Ingress which doesn&rsquo;t allow header appending.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressRule">IngressRule
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressSpec">IngressSpec</a>)
-</p>
-<p>
-<p>IngressRule represents the rules mapping the paths under a specified host to
-the related backend services. Incoming requests are first evaluated for a host
-match, then routed to the backend associated with the matching IngressRuleValue.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>hosts</code></br>
-<em>
-[]string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Host is the fully qualified domain name of a network host, as defined
-by RFC 3986. Note the following deviations from the &ldquo;host&rdquo; part of the
-URI as defined in the RFC:
-1. IPs are not allowed. Currently a rule value can only apply to the
-IP in the Spec of the parent .
-2. The <code>:</code> delimiter is not respected because ports are not allowed.
-Currently the port of an Ingress is implicitly :80 for http and
-:443 for https.
-Both these may change in the future.
-If the host is unspecified, the Ingress routes all traffic based on the
-specified IngressRuleValue.
-If multiple matching Hosts were provided, the first rule will take precedent.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>visibility</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressVisibility">
-IngressVisibility
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Visibility signifies whether this rule should <code>ClusterLocal</code>. If it&rsquo;s not
-specified then it defaults to <code>ExternalIP</code>.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>http</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.HTTPIngressRuleValue">
-HTTPIngressRuleValue
-</a>
-</em>
-</td>
-<td>
-<p>HTTP represents a rule to apply against incoming requests. If the
-rule is satisfied, the request is routed to the specified backend.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressSpec">IngressSpec
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.Ingress">Ingress</a>)
-</p>
-<p>
-<p>IngressSpec describes the Ingress the user wishes to exist.</p>
-<p>In general this follows the same shape as K8s Ingress.
-Some notable differences:
-- Backends now can have namespace:
-- Traffic can be split across multiple backends.
-- Timeout &amp; Retry can be configured.
-- Headers can be appended.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>generation</code></br>
-<em>
-int64
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedGeneration was used prior in Kubernetes versions <1.11
-when metadata.generation was not being incremented by the api server</p>
-<p>This property will be dropped in future Knative releases and should
-not be used - use metadata.generation</p>
-<p>Tracking issue: <a href="https://github.com/knative/serving/issues/643">https://github.com/knative/serving/issues/643</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<code>tls</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressTLS">
-[]IngressTLS
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>TLS configuration. Currently Ingress only supports a single TLS
-port: 443. If multiple members of this list specify different hosts, they
-will be multiplexed on the same port according to the hostname specified
-through the SNI TLS extension, if the ingress controller fulfilling the
-ingress supports SNI.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>rules</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressRule">
-[]IngressRule
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>A list of host rules used to configure the Ingress.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>visibility</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressVisibility">
-IngressVisibility
-</a>
-</em>
-</td>
-<td>
-<p>Visibility setting.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressStatus">IngressStatus
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.Ingress">Ingress</a>)
-</p>
-<p>
-<p>IngressStatus describe the current state of the Ingress.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>Status</code></br>
-<em>
-knative.dev/pkg/apis/duck/v1.Status
-</em>
-</td>
-<td>
-<p>
-(Members of <code>Status</code> are embedded into this type.)
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>loadBalancer</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.LoadBalancerStatus">
-LoadBalancerStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>LoadBalancer contains the current status of the load-balancer.
-This is to be superseded by the combination of <code>PublicLoadBalancer</code> and <code>PrivateLoadBalancer</code></p>
-</td>
-</tr>
-<tr>
-<td>
-<code>publicLoadBalancer</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.LoadBalancerStatus">
-LoadBalancerStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>PublicLoadBalancer contains the current status of the load-balancer.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>privateLoadBalancer</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.LoadBalancerStatus">
-LoadBalancerStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>PrivateLoadBalancer contains the current status of the load-balancer.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressTLS">IngressTLS
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressSpec">IngressSpec</a>)
-</p>
-<p>
-<p>IngressTLS describes the transport layer security associated with an Ingress.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>hosts</code></br>
-<em>
-[]string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Hosts is a list of hosts included in the TLS certificate. The values in
-this list must match the name/s used in the tlsSecret. Defaults to the
-wildcard host setting for the loadbalancer controller fulfilling this
-Ingress, if left unspecified.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>secretName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SecretName is the name of the secret used to terminate SSL traffic.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>secretNamespace</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SecretNamespace is the namespace of the secret used to terminate SSL traffic.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>serverCertificate</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>ServerCertificate identifies the certificate filename in the secret.
-Defaults to <code>tls.crt</code>.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>privateKey</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>PrivateKey identifies the private key filename in the secret.
-Defaults to <code>tls.key</code>.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.IngressVisibility">IngressVisibility
-(<code>string</code> alias)</p></h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressRule">IngressRule</a>, 
-<a href="#networking.internal.knative.dev/v1alpha1.IngressSpec">IngressSpec</a>)
-</p>
-<p>
-<p>IngressVisibility describes whether the Ingress should be exposed to
-public gateways or not.</p>
-</p>
-<h3 id="networking.internal.knative.dev/v1alpha1.LoadBalancerIngressStatus">LoadBalancerIngressStatus
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.LoadBalancerStatus">LoadBalancerStatus</a>)
-</p>
-<p>
-<p>LoadBalancerIngressStatus represents the status of a load-balancer ingress point:
-traffic intended for the service should be sent to an ingress point.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>ip</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>IP is set for load-balancer ingress points that are IP based
-(typically GCE or OpenStack load-balancers)</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>domain</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Domain is set for load-balancer ingress points that are DNS based
-(typically AWS load-balancers)</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>domainInternal</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DomainInternal is set if there is a cluster-local DNS name to access the Ingress.</p>
-<p>NOTE: This differs from K8s Ingress, since we also desire to have a cluster-local
-DNS name to allow routing in case of not having a mesh.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>meshOnly</code></br>
-<em>
-bool
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>MeshOnly is set if the Ingress is only load-balanced through a Service mesh.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.LoadBalancerStatus">LoadBalancerStatus
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.IngressStatus">IngressStatus</a>)
-</p>
-<p>
-<p>LoadBalancerStatus represents the status of a load-balancer.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>ingress</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.LoadBalancerIngressStatus">
-[]LoadBalancerIngressStatus
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Ingress is a list containing ingress points for the load-balancer.
-Traffic intended for the service should be sent to these ingress points.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.ServerlessServiceOperationMode">ServerlessServiceOperationMode
-(<code>string</code> alias)</p></h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessServiceSpec">ServerlessServiceSpec</a>)
-</p>
-<p>
-<p>ServerlessServiceOperationMode is an enumeration of the modes of operation
-for the ServerlessService.</p>
-</p>
-<h3 id="networking.internal.knative.dev/v1alpha1.ServerlessServiceSpec">ServerlessServiceSpec
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessService">ServerlessService</a>)
-</p>
-<p>
-<p>ServerlessServiceSpec describes the ServerlessService.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>mode</code></br>
-<em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessServiceOperationMode">
-ServerlessServiceOperationMode
-</a>
-</em>
-</td>
-<td>
-<p>Mode describes the mode of operation of the ServerlessService.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>objectRef</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
-Kubernetes core/v1.ObjectReference
-</a>
-</em>
-</td>
-<td>
-<p>ObjectRef defines the resource that this ServerlessService
-is responsible for making &ldquo;serverless&rdquo;.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>ProtocolType</code></br>
-<em>
-knative.dev/serving/pkg/apis/networking.ProtocolType
-</em>
-</td>
-<td>
-<p>The application-layer protocol. Matches <code>RevisionProtocolType</code> set on the owning pa/revision.
-serving imports networking, so just use string.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="networking.internal.knative.dev/v1alpha1.ServerlessServiceStatus">ServerlessServiceStatus
-</h3>
-<p>
-(<em>Appears on:</em>
-<a href="#networking.internal.knative.dev/v1alpha1.ServerlessService">ServerlessService</a>)
-</p>
-<p>
-<p>ServerlessServiceStatus describes the current state of the ServerlessService.</p>
-</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>Status</code></br>
-<em>
-knative.dev/pkg/apis/duck/v1.Status
-</em>
-</td>
-<td>
-<p>
-(Members of <code>Status</code> are embedded into this type.)
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>serviceName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>ServiceName holds the name of a core K8s Service resource that
-load balances over the pods backing this Revision (activator or revision).</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>privateServiceName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>PrivateServiceName holds the name of a core K8s Service resource that
-load balances over the user service pods backing this Revision.</p>
-</td>
-</tr>
-</tbody>
-</table>
 <hr/>
 <h2 id="serving.knative.dev/v1">serving.knative.dev/v1</h2>
 <p>
@@ -2176,7 +759,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2270,7 +853,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2299,7 +882,7 @@ RevisionSpec
 <td>
 <code>PodSpec</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -2396,7 +979,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2499,7 +1082,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2581,8 +1164,8 @@ ServiceStatus
 </h3>
 <p>
 (<em>Appears on:</em>
-<a href="#serving.knative.dev/v1.Configuration">Configuration</a>, 
 <a href="#serving.knative.dev/v1beta1.Configuration">Configuration</a>, 
+<a href="#serving.knative.dev/v1.Configuration">Configuration</a>,
 <a href="#serving.knative.dev/v1.ServiceSpec">ServiceSpec</a>)
 </p>
 <p>
@@ -2616,8 +1199,8 @@ RevisionTemplateSpec
 </h3>
 <p>
 (<em>Appears on:</em>
-<a href="#serving.knative.dev/v1beta1.Configuration">Configuration</a>, 
-<a href="#serving.knative.dev/v1.Configuration">Configuration</a>)
+<a href="#serving.knative.dev/v1.Configuration">Configuration</a>, 
+<a href="#serving.knative.dev/v1beta1.Configuration">Configuration</a>)
 </p>
 <p>
 <p>ConfigurationStatus communicates the observed state of the Configuration (from the controller).</p>
@@ -2708,6 +1291,45 @@ Configuration. It might not be ready yet, for that use LatestReadyRevisionName.<
 </tr>
 </tbody>
 </table>
+<h3 id="serving.knative.dev/v1.ContainerStatuses">ContainerStatuses
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#serving.knative.dev/v1.RevisionStatus">RevisionStatus</a>)
+</p>
+<p>
+<p>ContainerStatuses holds the information of container name and image digest value</p>
+</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code></br>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>imageDigest</code></br>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.knative.dev/v1.RevisionSpec">RevisionSpec
 </h3>
 <p>
@@ -2732,7 +1354,7 @@ Configuration. It might not be ready yet, for that use LatestReadyRevisionName.<
 <td>
 <code>PodSpec</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -2840,11 +1462,35 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>ImageDigest holds the resolved digest for the image specified
+<p>DeprecatedImageDigest holds the resolved digest for the image specified
 within .Spec.Container.Image. The digest is resolved during the creation
 of Revision. This field holds the digest value regardless of whether
 a tag or digest was originally specified in the Container object. It
-may be empty if the image comes from a registry listed to skip resolution.</p>
+may be empty if the image comes from a registry listed to skip resolution.
+If multiple containers specified then DeprecatedImageDigest holds the digest
+for serving container.
+DEPRECATED: Use ContainerStatuses instead.
+TODO(savitaashture) Remove deprecatedImageDigest.
+ref <a href="https://kubernetes.io/docs/reference/using-api/deprecation-policy">https://kubernetes.io/docs/reference/using-api/deprecation-policy</a> for deprecation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>containerStatuses</code></br>
+<em>
+<a href="#serving.knative.dev/v1.ContainerStatuses">
+[]ContainerStatuses
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ContainerStatuses is a slice of images present in .Spec.Container[*].Image
+to their respective digests and their container name.
+The digests are resolved during the creation of Revision.
+ContainerStatuses holds the container name and image digests
+for both serving and non serving containers.
+ref: <a href="http://bit.ly/image-digests">http://bit.ly/image-digests</a></p>
 </td>
 </tr>
 </tbody>
@@ -2871,7 +1517,7 @@ Based on: <a href="https://github.com/kubernetes/api/blob/e771f807/core/v1/types
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2900,7 +1546,7 @@ RevisionSpec
 <td>
 <code>PodSpec</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -2985,8 +1631,8 @@ revisions and configurations.</p>
 </h3>
 <p>
 (<em>Appears on:</em>
-<a href="#serving.knative.dev/v1beta1.Route">Route</a>, 
-<a href="#serving.knative.dev/v1.Route">Route</a>)
+<a href="#serving.knative.dev/v1.Route">Route</a>, 
+<a href="#serving.knative.dev/v1beta1.Route">Route</a>)
 </p>
 <p>
 <p>RouteStatus communicates the observed state of the Route (from the controller).</p>
@@ -3386,7 +2032,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -3531,7 +2177,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -3607,62 +2253,16 @@ updated by the system.</p>
 </tr>
 <tr>
 <td>
-<code>concurrencyModel</code></br>
-<em>
-<a href="#serving.knative.dev/v1alpha1.DeprecatedRevisionRequestConcurrencyModelType">
-DeprecatedRevisionRequestConcurrencyModelType
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedConcurrencyModel specifies the desired concurrency model
-(Single or Multi) for the
-Revision. Defaults to Multi.
-Deprecated in favor of ContainerConcurrency.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>buildName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedBuildName optionally holds the name of the Build responsible for
-producing the container image for its Revision.
-DEPRECATED: Use DeprecatedBuildRef instead.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>buildRef</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
-Kubernetes core/v1.ObjectReference
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedBuildRef holds the reference to the build (if there is one) responsible
-for producing the container image for this Revision. Otherwise, nil</p>
-</td>
-</tr>
-<tr>
-<td>
 <code>container</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core">
 Kubernetes core/v1.Container
 </a>
 </em>
 </td>
 <td>
 <em>(Optional)</em>
-<p>Container defines the unit of execution for this Revision.
+<p>DeprecatedContainer defines the unit of execution for this Revision.
 In the context of a Revision, we disallow a number of the fields of
 this Container, including: name and lifecycle.
 See also the runtime contract for more information about the execution
@@ -3728,7 +2328,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -3846,7 +2446,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -4216,18 +2816,45 @@ Configuration. It might not be ready yet, for that use LatestReadyRevisionName.<
 </tr>
 </tbody>
 </table>
-<h3 id="serving.knative.dev/v1alpha1.DeprecatedRevisionRequestConcurrencyModelType">DeprecatedRevisionRequestConcurrencyModelType
-(<code>string</code> alias)</p></h3>
+<h3 id="serving.knative.dev/v1alpha1.ContainerStatuses">ContainerStatuses
+</h3>
 <p>
 (<em>Appears on:</em>
-<a href="#serving.knative.dev/v1alpha1.RevisionSpec">RevisionSpec</a>)
+<a href="#serving.knative.dev/v1alpha1.RevisionStatus">RevisionStatus</a>)
 </p>
 <p>
-<p>DeprecatedRevisionRequestConcurrencyModelType is an enumeration of the
-concurrency models supported by a Revision.
-DEPRECATED in favor of an integer based ContainerConcurrency setting.
-TODO(vagababov): retire completely in 0.9.</p>
+<p>ContainerStatuses holds the information of container name and image digest value</p>
 </p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code></br>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>imageDigest</code></br>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.knative.dev/v1alpha1.DeprecatedRevisionServingStateType">DeprecatedRevisionServingStateType
 (<code>string</code> alias)</p></h3>
 <p>
@@ -4425,62 +3052,16 @@ updated by the system.</p>
 </tr>
 <tr>
 <td>
-<code>concurrencyModel</code></br>
-<em>
-<a href="#serving.knative.dev/v1alpha1.DeprecatedRevisionRequestConcurrencyModelType">
-DeprecatedRevisionRequestConcurrencyModelType
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedConcurrencyModel specifies the desired concurrency model
-(Single or Multi) for the
-Revision. Defaults to Multi.
-Deprecated in favor of ContainerConcurrency.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>buildName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedBuildName optionally holds the name of the Build responsible for
-producing the container image for its Revision.
-DEPRECATED: Use DeprecatedBuildRef instead.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>buildRef</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
-Kubernetes core/v1.ObjectReference
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedBuildRef holds the reference to the build (if there is one) responsible
-for producing the container image for this Revision. Otherwise, nil</p>
-</td>
-</tr>
-<tr>
-<td>
 <code>container</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core">
 Kubernetes core/v1.Container
 </a>
 </em>
 </td>
 <td>
 <em>(Optional)</em>
-<p>Container defines the unit of execution for this Revision.
+<p>DeprecatedContainer defines the unit of execution for this Revision.
 In the context of a Revision, we disallow a number of the fields of
 this Container, including: name and lifecycle.
 See also the runtime contract for more information about the execution
@@ -4555,11 +3136,35 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>ImageDigest holds the resolved digest for the image specified
+<p>DeprecatedImageDigest holds the resolved digest for the image specified
 within .Spec.Container.Image. The digest is resolved during the creation
 of Revision. This field holds the digest value regardless of whether
 a tag or digest was originally specified in the Container object. It
-may be empty if the image comes from a registry listed to skip resolution.</p>
+may be empty if the image comes from a registry listed to skip resolution.
+If multiple containers specified then DeprecatedImageDigest holds the digest
+for serving container.
+DEPRECATED: Use ContainerStatuses instead.
+TODO(savitaashture) Remove deprecatedImageDigest.
+ref <a href="https://kubernetes.io/docs/reference/using-api/deprecation-policy">https://kubernetes.io/docs/reference/using-api/deprecation-policy</a> for deprecation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>containerStatuses</code></br>
+<em>
+<a href="#serving.knative.dev/v1alpha1.ContainerStatuses">
+[]ContainerStatuses
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ContainerStatuses is a slice of images present in .Spec.Container[*].Image
+to their respective digests and their container name.
+The digests are resolved during the creation of Revision.
+ContainerStatuses holds the container name and image digests
+for both serving and non serving containers.
+ref: <a href="http://bit.ly/image-digests">http://bit.ly/image-digests</a></p>
 </td>
 </tr>
 </tbody>
@@ -4586,7 +3191,7 @@ Based on: <a href="https://github.com/kubernetes/api/blob/e771f807/core/v1/types
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -4661,62 +3266,16 @@ updated by the system.</p>
 </tr>
 <tr>
 <td>
-<code>concurrencyModel</code></br>
-<em>
-<a href="#serving.knative.dev/v1alpha1.DeprecatedRevisionRequestConcurrencyModelType">
-DeprecatedRevisionRequestConcurrencyModelType
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedConcurrencyModel specifies the desired concurrency model
-(Single or Multi) for the
-Revision. Defaults to Multi.
-Deprecated in favor of ContainerConcurrency.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>buildName</code></br>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedBuildName optionally holds the name of the Build responsible for
-producing the container image for its Revision.
-DEPRECATED: Use DeprecatedBuildRef instead.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>buildRef</code></br>
-<em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectreference-v1-core">
-Kubernetes core/v1.ObjectReference
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>DeprecatedBuildRef holds the reference to the build (if there is one) responsible
-for producing the container image for this Revision. Otherwise, nil</p>
-</td>
-</tr>
-<tr>
-<td>
 <code>container</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core">
 Kubernetes core/v1.Container
 </a>
 </em>
 </td>
 <td>
 <em>(Optional)</em>
-<p>Container defines the unit of execution for this Revision.
+<p>DeprecatedContainer defines the unit of execution for this Revision.
 In the context of a Revision, we disallow a number of the fields of
 this Container, including: name and lifecycle.
 See also the runtime contract for more information about the execution
@@ -5250,7 +3809,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -5344,7 +3903,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -5373,7 +3932,7 @@ RevisionSpec
 <td>
 <code>PodSpec</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -5470,7 +4029,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -5573,7 +4132,7 @@ string
 <td>
 <code>metadata</code></br>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -5654,5 +4213,5 @@ ServiceStatus
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>bf0a84876</code>.
+on git commit <code>d74ecbeb1</code>.
 </em></p>

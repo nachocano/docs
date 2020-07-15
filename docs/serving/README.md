@@ -5,7 +5,7 @@ and scales to support advanced scenarios.
 The Knative Serving project provides middleware primitives that enable:
 
 - Rapid deployment of serverless containers
-- Automatic scaling up and down to zero
+- [Automatic scaling up and down to zero](./autoscaling/README.md)
 - Routing and network programming for Istio components
 - Point-in-time snapshots of deployed code and configurations
 
@@ -36,7 +36,7 @@ serverless workload behaves on the cluster:
   are immutable objects and can be retained for as long as useful. Knative
   Serving Revisions can be automatically scaled up and down according to
   incoming traffic. See
-  [Configuring the Autoscaler](./configuring-autoscaling.md) for more
+  [Configuring the Autoscaler](./autoscaling) for more
   information.
 
 ![Diagram that displays how the Serving resources coordinate with each other.](https://github.com/knative/serving/raw/master/docs/spec/images/object_model.png)
@@ -77,10 +77,9 @@ in the Knative Serving repository.
 - [Configuring cluster local routes](./cluster-local-route.md)
 - [Using a custom domain](./using-a-custom-domain.md)
 - [Assigning a static IP address for Knative on Google Kubernetes Engine](./gke-assigning-static-ip-address.md)
+- [Using subroutes](./using-subroutes.md)
 
 ## Known Issues
 
 See the [Knative Serving Issues](https://github.com/knative/serving/issues) page
 for a full list of known issues.
-
-

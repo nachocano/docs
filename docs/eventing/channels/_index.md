@@ -1,6 +1,6 @@
 ---
 title: "Knative Eventing channels"
-linkTitle: "Eventing channels"
+linkTitle: "Channels"
 weight: 40
 type: "docs"
 showlandingtoc: "true"
